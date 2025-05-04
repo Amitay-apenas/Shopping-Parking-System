@@ -10,13 +10,13 @@ import entity.Vehicle;
 import DAO.vehicleDAO;
 
 public class Screen extends JFrame {
-    JLabel marcaLabel = new JLabel("Marca");
+    JLabel marcaLabel = new JLabel("Tipo");
     JTextField marca = new JTextField();
 
-    JLabel modeloLabel = new JLabel("Modelo");
+    JLabel modeloLabel = new JLabel("Dono");
     JTextField modelo = new JTextField();
 
-    JLabel anoLabel = new JLabel("Ano");
+    JLabel anoLabel = new JLabel("Modelo");
     JFormattedTextField ano = new JFormattedTextField();
 
     JLabel placaLabel = new JLabel("Placa");
@@ -46,77 +46,87 @@ public class Screen extends JFrame {
         setResizable(false);
         getContentPane().setBackground(new Color(0x404040));
 
-        // Inicialização dos componentes
+        add(modeloLabel);
+        modeloLabel.requestFocus();
+
+        add(modelo);
+        modelo.requestFocus();
+
+        add(marcaLabel);
+        marcaLabel.requestFocus();
+
+        add(marca);
+        marca.requestFocus();
+
+        add(anoLabel);
+        anoLabel.requestFocus();
+
+        add(ano);
+        ano.requestFocus();
+
+        add(placa);
+        placa.requestFocus();
+
+        add(horaEntradaLabel);
+        horaEntradaLabel.requestFocus();
+
+        add(placaLabel);
+        placaLabel.requestFocus();
+
+        add(horaEntrada);
+        horaEntrada.requestFocus();
+
+        add(pSpace);
+        pSpace.requestFocus();
+
+        add(addBtn);
+        addBtn.requestFocus();
+
+        add(rmvBtn);
+        rmvBtn.requestFocus();
+
+        add(itemsList);
+        itemsList.requestFocus();
+
         modeloLabel.setBounds(10, 9, 200, 10);
         modeloLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         modeloLabel.setForeground(new Color(0x00EEFF));
-
-        add(modeloLabel);
-        modeloLabel.requestFocus();
 
         modelo.setBounds(10, 20, 200, 30);
         modelo.setFont(new Font("Arial", Font.ITALIC, 12));
         modelo.setForeground(new Color(0x00EEFF));
         modelo.setBackground(new Color(0x5E5E5E));
 
-        add(modelo);
-        modelo.requestFocus();
-
         marcaLabel.setBounds(220, 9, 200, 10);
         marcaLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         marcaLabel.setForeground(new Color(0x00EEFF));
-
-        add(marcaLabel);
-        marca.requestFocus();
 
         marca.setBounds(220, 20, 200, 30);
         marca.setFont(new Font("Arial", Font.ITALIC, 12));
         marca.setForeground(new Color(0x00EEFF));
         marca.setBackground(new Color(0x5E5E5E));
 
-        add(marca);
-        marca.requestFocus();
-
         anoLabel.setBounds(430, 9, 200, 10);
         anoLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         anoLabel.setForeground(new Color(0x00EEFF));
 
-        add(anoLabel);
-        anoLabel.requestFocus();
-
-        MaskFormatter anoFormatter = null;
-        try {
-            anoFormatter = new MaskFormatter("####");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        ano.setFormatterFactory(new DefaultFormatterFactory(anoFormatter));
         ano.setBounds(430, 20, 200, 30);
         ano.setFont(new Font("Arial", Font.PLAIN, 12));
         ano.setForeground(new Color(0x00EEFF));
         ano.setBackground(new Color(0x5E5E5E));
 
-        add(ano);
-        ano.requestFocus();
-
         placaLabel.setBounds(10, 60, 200, 10);
         placaLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         placaLabel.setForeground(new Color(0x00EEFF));
-        add(placaLabel);
+
         placa.setBounds(10, 70, 200, 30);
         placa.setFont(new Font("Arial", Font.PLAIN, 12));
         placa.setForeground(new Color(0x00EEFF));
         placa.setBackground(new Color(0x5E5E5E));
 
-        add(placa);
-        placa.requestFocus();
-
         horaEntradaLabel.setBounds(220, 60, 200, 10);
         horaEntradaLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         horaEntradaLabel.setForeground(new Color(0x00EEFF));
-
-        add(horaEntradaLabel);
-        placa.requestFocus();
 
         MaskFormatter horaFormatter = null;
         try {
@@ -130,14 +140,8 @@ public class Screen extends JFrame {
         horaEntrada.setForeground(new Color(0x00EEFF));
         horaEntrada.setBackground(new Color(0x5E5E5E));
 
-        add(horaEntrada);
-        horaEntrada.requestFocus();
-
         pSpace.setBounds(430, 70, 200, 30);
         pSpace.setForeground(new Color(0x00EEFF));
-
-        add(pSpace);
-        pSpace.requestFocus();
 
         addBtn.setBounds(250, 120, 100, 40);
         addBtn.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -145,32 +149,24 @@ public class Screen extends JFrame {
         addBtn.setBackground(new Color(114, 165, 77));
         addBtn.addActionListener(this::addBtnAction);
 
-        add(addBtn);
-        addBtn.requestFocus();
-
         rmvBtn.setBounds(400, 120, 100, 40);
         rmvBtn.setFont(new Font("Arial", Font.PLAIN, 12));
         rmvBtn.setForeground(new Color(255, 255, 255));
         rmvBtn.setBackground(new Color(232, 108, 108));
         rmvBtn.addActionListener(this::removeBtnAction);
 
-        add(rmvBtn);
-        rmvBtn.requestFocus();
-
         itemsList.setBounds(10, 170, 770, 380);
         itemsList.setForeground(new Color(0x00FFAC));
         itemsList.setBackground(new Color(0x494949));
 
-        add(itemsList);
-        itemsList.requestFocus();
 
-        // Carrega os veículos do banco de dados ao iniciar
+
         loadVehiclesFromDatabase();
     }
 
     private void loadVehiclesFromDatabase() {
         Collection<Vehicle> vehicles = vDAO.listAllVehicle();
-        listModel.clear(); // Limpa a lista antes de carregar
+        listModel.clear();
         for (Vehicle vehicle : vehicles) {
             listModel.addElement(vehicle.getModelo() + " - " + vehicle.getMarca() + " - " + vehicle.getAno() + " - " + vehicle.getPlaca() + " - " + vehicle.getHoraEntrada());
         }
@@ -235,7 +231,6 @@ public class Screen extends JFrame {
             parkingSpace--;
             pSpace.setText("Vagas disponiveis " + parkingSpace);
 
-            // Limpa os campos de entrada após adicionar
             modelo.setText("");
             marca.setText("");
             ano.setText("");
